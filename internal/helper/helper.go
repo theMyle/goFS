@@ -5,24 +5,30 @@ import (
 	"os"
 	"os/exec"
 	"runtime"
+	"strings"
 
 	"github.com/sqweek/dialog"
 )
 
-func Select_folder() {
+func Select_folder() (string, string) {
 	dir, err := dialog.Directory().Title("Choose a folder to sort").Browse()
 	if err != nil {
 		println(err, ": Error selecting folder")
-		return
+		return "", ""
 	}
+
+	substrings := strings.Split(dir, "\\")
+	folder_name := substrings[len(substrings)-1]
 
 	err = os.Chdir(dir)
 	if 	(err != nil) {
 		println(err, ": Error changing directory")
-		return
+		return "", ""
 	}
 
 	fmt.Println(dir)
+
+	return folder_name, dir
 }
 
 func Clear_screen() {

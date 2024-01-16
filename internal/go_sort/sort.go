@@ -4,12 +4,13 @@ import (
 	"fmt"
 
 	"github.com/theMyle/goFileSorter/internal/helper"
+	"github.com/theMyle/goFileSorter/internal/structure"
 )
 
 func Sort() {
 	var user_input string
 
-	helper.Select_folder()
+	name, path := helper.Select_folder()
 
 	for {
 		fmt.Print("Do you wish to \"SORT\" this directory? (y or n): ")
@@ -22,5 +23,11 @@ func Sort() {
 			break
 		}
 	}
-	// sorting algorithm
+
+	fmt.Printf("\nScanning Directory...\n\n")
+
+	var root_folder structure.Folder
+	structure.Init_root(&root_folder, name, path)
+	structure.Scan_dir(&root_folder)
+	
 }

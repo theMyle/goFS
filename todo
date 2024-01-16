@@ -1,19 +1,12 @@
-Implement sorting algorithm:
+- [] sorting algorithm.  
+- [] un sort algorithm.  
 
-1. Scan the directory for files and folders
-2. for each folder scanned, scan the folders inside it recursively
-3. store the folder name and the files (and folders) inside it. (Do it also recursively unitl there are no folders left)
-
-root -
-      |- Folder1 --
-      |- File1     |- Folder2 -----------
-      |- File2     |- Folder3 --        |- File6
-      |- File..    |- File3    |- File4 |- File7
-      			       |- File5 |- File8
-
-root = [Folder1, File1, File2, File..]
-Folder1 = [Folder2, Folder3, File3]
-Folder2 = [File6, File7, File8]
-Folder3 = [File4, File5]
-
-
+sorting algorithm.  
+1. Scan the directory.  
+2. Append files into an array.  
+3. Append folders into an array.  
+4. Iterate through the folders array.  
+5. For each folder create a new struct.
+6. Initialize the struct.  
+7. Append the struct to the structs array.  
+8. Repeat step 5 until list is empty.  
