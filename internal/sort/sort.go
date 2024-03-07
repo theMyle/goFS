@@ -8,7 +8,6 @@ import (
 	"strings"
 )
 
-var GoSortFolderName string = "GoSort"
 var InternalFolders []string = []string{"Music", "Pictures", "Videos", "Apps", "Documents", "extras"}
 var musicExt []string = []string{"mp3", "wav", "aiff", "flac", "aac", "mod", "ogg", "wma", "m4a", "amr", "mid", "midi", "ac3", "alac", "ape", "dsd", "opus", "au", "pcm", "mp4", "3gp", "ra", "rm", "vorbis", "wv", "tta", "dts", "g723", "g726", "xwm", "caf", "eac3", "mka", "mlp", "s3m", "it"}
 var picturesExt []string = []string{"jpeg", "jpg", "png", "gif", "bmp", "tiff", "tif", "svg", "webp", "heif", "heic", "ico", "psd", "raw", "pcx", "pbm", "pgm", "ppm", "pnm", "webp", "jfif", "jpe", "jps", "j2k", "jp2", "jxr", "wdp", "xbm", "xpm", "eps", "pdf", "emf", "wmf", "cgm", "dcm", "dicom", "exif"}

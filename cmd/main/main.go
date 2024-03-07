@@ -2,11 +2,12 @@ package main
 
 import (
 	"fmt"
-
-	"github.com/theMyle/goFileSorter/internal/sort"
 )
+
+var GoSortFolderName string = "GoSort"
 
 func main() {
 	fmt.Println("Hello World!")
-	sort.Sort("C:\\Users\\jangk\\Downloads")
+	// sort.Sort("C:\\Users\\jangk\\Downloads")
+	// unsort.Unsort("C:\\Users\\jangk\\Downloads\\")
 }
