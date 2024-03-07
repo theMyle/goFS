@@ -23,9 +23,9 @@ func Sort(path string) {
 
 	// Parse Files
 	files := getFiles(entries)
-	gosortPath := createFolder(path, GoSortFolderName)
+	gosortFolderPath := createFolder(path, GoSortFolderName)
 
-	// Initialize Maps
+	// Initialize map
 	mp := make(map[string]string, 0)
 	addMap(mp, musicExt, InternalFolders[0])
 	addMap(mp, picturesExt, InternalFolders[1])
@@ -34,20 +34,7 @@ func Sort(path string) {
 	addMap(mp, documentsExt, InternalFolders[4])
 
 	// Move Files
-	for _, v := range files {
-		extension := strings.ToLower(filepath.Ext(v)[1:])
-
-		value, exists := mp[extension]
-		if !exists {
-			value = InternalFolders[5]
-		}
-		createFolder(gosortPath, value)
-
-		origPath := filepath.Join(path, v)
-		destPath := filepath.Join(path, GoSortFolderName, value, v)
-
-		os.Rename(origPath, destPath)
-	}
+ moveFiles(files)
 }
 
 func createFolder(path string, folderName string) string {
@@ -76,5 +63,22 @@ func getFiles(files []fs.DirEntry) []string {
 func addMap(mp map[string]string, keys []string, value string) {
 	for _, v := range keys {
 		mp[v] = value
+	}
+}
+
+func moveFiles(files []string) {
+	for _, v := range files {
+		extension := strings.ToLower(filepath.Ext(v)[1:])
+
+		value, exists := mp[extension]
+		if !exists {
+			value = InternalFolders[5]
+		}
+		createFolder(gosortFolderPath, value)
+
+		origPath := filepath.Join(path, v)
+		destPath := filepath.Join(path, GoSortFolderName, value, v)
+
+		os.Rename(origPath, destPath)
 	}
 }
