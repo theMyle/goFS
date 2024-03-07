@@ -36,7 +36,7 @@ func main() {
 			printHelp()
 			printMenu()
 		case "q":
-			loop = false
+			os.Exit(0)
 		default:
 			fmt.Println("Please try again")
 		}
