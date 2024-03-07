@@ -22,6 +22,8 @@ var (
 )
 
 func Sort(path string) {
+	fmt.Printf("\n-- SORTING --\n")
+
 	// Parse Files
 	fmt.Println("- Parsing Files")
 	entries, err := os.ReadDir(path)

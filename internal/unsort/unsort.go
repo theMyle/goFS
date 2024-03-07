@@ -9,6 +9,8 @@ import (
 )
 
 func Unsort(root string) {
+	fmt.Printf("\n-- UNSORTING --\n")
+
 	files, folders := scanDir(root)
 	var wg sync.WaitGroup
 
