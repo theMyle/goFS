@@ -7,6 +7,7 @@ import (
 	"os"
 	"path/filepath"
 	"strings"
+	"time"
 
 	config "github.com/theMyle/goFileSorter/internal/configs"
 )
@@ -22,10 +23,11 @@ var (
 )
 
 func Sort(path string) {
-	fmt.Printf("\n-- SORTING --\n")
+	fmt.Printf("\n--- SORTING ---\n\n")
+	startTime := time.Now()
 
 	// Parse Files
-	fmt.Println("- Parsing Files")
+	fmt.Print("Parsing Files ")
 	entries, err := os.ReadDir(path)
 	if err != nil {
 		log.Fatal(err)
@@ -33,6 +35,8 @@ func Sort(path string) {
 
 	files := getFiles(entries)
 	gosortFolderPath := createFolder(path, goSortFolderName)
+	fmt.Printf("\t[/] ")
+	fmt.Printf("\t- %d files\n", len(files))
 
 	// Initialize map
 	mp := make(map[string]string, 0)
@@ -43,7 +47,7 @@ func Sort(path string) {
 	addMap(mp, documentsExt, internalFolders[4])
 
 	// Move Files
-	fmt.Println("- Moving Files")
+	fmt.Print("Moving Files ")
 	for _, v := range files {
 		fileName := filepath.Ext(v)
 		var extension string
@@ -62,12 +66,13 @@ func Sort(path string) {
 
 		origPath := filepath.Join(path, v)
 		destPath := filepath.Join(path, config.GoSortFolderName, value, v)
-		fmt.Printf("\t%s\n", destPath)
-
 		os.Rename(origPath, destPath)
 	}
+	fmt.Println("\t[/]")
 
-	fmt.Println("- Finished Sorting!")
+	elapsedTime := time.Since(startTime)
+	fmt.Println("Finished \t[/]")
+	fmt.Printf("\n- Total execution time: (%v)", elapsedTime)
 }
 
 func createFolder(path string, folderName string) string {
@@ -86,7 +91,6 @@ func getFiles(files []fs.DirEntry) []string {
 
 	for _, v := range files {
 		if !v.IsDir() {
-			fmt.Printf("\t%s\n", v.Name())
 			list = append(list, v.Name())
 		}
 	}

@@ -2,126 +2,45 @@ package unsort
 
 import (
 	"fmt"
-	"log"
 	"os"
 	"path/filepath"
-	"sync"
+	"time"
+
+	"github.com/theMyle/goFileSorter/internal/directory"
+	fle "github.com/theMyle/goFileSorter/internal/files"
 )
 
 func Unsort(root string) {
-	fmt.Printf("\n-- UNSORTING --\n")
+	fmt.Printf("\n--- UNSORTING ---\n\n")
 
-	files, folders := scanDir(root)
-	var wg sync.WaitGroup
+	startTime := time.Now()
 
-	// Scanning Files
-	fmt.Println("- Scanning Directory")
-	for _, v := range folders {
-		wg.Add(1)
-		scanDirRecursive(v, &files, &folders, &wg)
+	// Look for files
+	fmt.Print("Parsing Files ")
+	files, folders := directory.Scan(root)
+
+	for _, dir := range folders {
+		directory.ScanRecursive(dir, &files, &folders)
 	}
 
-	wg.Wait()
+	fmt.Printf("\t[/] ")
+	fmt.Printf("\t- %d files\n", len(files))
 
-	// Moving Files
-	fmt.Println("- Moving Files")
-	moveFiles(files, root)
+	// move files
+	fmt.Print("Moving Files ")
+	fle.MoveFiles(files, root)
+	fmt.Println("\t[/]")
 
-	// Cleanup
-	fmt.Println("- Cleaning up folders")
+	// clean empty folder
+	fmt.Print("Cleanup ")
 	for _, v := range folders {
-		fmt.Println("\t", v)
 		cleanUp(v)
 	}
+	fmt.Println("\t[/]")
 
-	fmt.Println("- Finished Unsorting")
-}
-
-func scanDir(path string) ([]string, []string) {
-	entries, err := os.ReadDir(path)
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	files := make([]string, 0)
-	folders := make([]string, 0)
-
-	for _, v := range entries {
-		absPath := filepath.Join(path, v.Name())
-		if v.IsDir() {
-			folders = append(folders, absPath)
-		}
-	}
-
-	return files, folders
-}
-
-func scanDirRecursive(path string, fileContainer *[]string, folderContainer *[]string, wg *sync.WaitGroup) {
-	defer wg.Done()
-
-	var subWG sync.WaitGroup
-
-	entries, err := os.ReadDir(path)
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	for _, v := range entries {
-		absPath := filepath.Join(path, v.Name())
-		fmt.Printf("\t%s\n", absPath)
-		if v.IsDir() {
-			*folderContainer = append(*folderContainer, absPath)
-			subWG.Add(1)
-			go func(dir string) {
-				scanDirRecursive(dir, fileContainer, folderContainer, &subWG)
-			}(absPath)
-		} else {
-			*fileContainer = append(*fileContainer, absPath)
-		}
-	}
-
-	subWG.Wait()
-}
-
-func moveFiles(files []string, destPath string) {
-	for _, v := range files {
-		file, err := os.Stat(v)
-		if err != nil {
-			log.Fatal(err)
-		}
-
-		name := file.Name()
-
-		currentPath := v
-		newPath := filepath.Join(destPath, name)
-
-		present := fileExists(newPath)
-		altPath := newPath
-		counter := 1
-		for present {
-			altPath = fmt.Sprintf("%s (%d)", newPath, counter)
-			present = fileExists(altPath)
-			counter++
-		}
-
-		newPath = altPath
-		fmt.Printf("\t%s\n", newPath)
-
-		err = os.Rename(currentPath, newPath)
-		if err != nil {
-			log.Fatal(err)
-		}
-	}
-}
-
-func fileExists(file string) bool {
-	if _, err := os.Stat(file); err == nil {
-		return true
-	} else if os.IsNotExist(err) {
-		return false
-	}
-
-	return false
+	elapsedTime := time.Since(startTime)
+	fmt.Println("Finished \t[/]")
+	fmt.Printf("\nTotal execution time: (%v)\n", elapsedTime)
 }
 
 func cleanUp(dir string) {
@@ -134,7 +53,7 @@ func cleanUp(dir string) {
 		if v.IsDir() {
 			cleanUp(absPath)
 
-			if isEmptyDir(absPath) {
+			if directory.IsEmpty(absPath) {
 				folders = append(folders, absPath)
 			}
 		}
@@ -148,12 +67,4 @@ func cleanUp(dir string) {
 	if len(entries) == 0 {
 		os.Remove(dir)
 	}
-}
-
-func isEmptyDir(dir string) bool {
-	entries, err := os.ReadDir(dir)
-	if err != nil {
-		return false
-	}
-	return len(entries) == 0
 }

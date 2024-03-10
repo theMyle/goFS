@@ -14,7 +14,11 @@ import (
 )
 
 func main() {
-	clearScreen()
+	AppRun()
+}
+
+func AppRun() {
+	printHeader()
 	printMenu()
 
 	var userInput string
@@ -37,29 +41,27 @@ func main() {
 			printMenu()
 		case "q":
 			os.Exit(0)
+		case "Q":
+			os.Exit(0)
 		default:
 			fmt.Println("Please try again")
 		}
 	}
-
-	fmt.Println("\nGo Sort Complete!")
-	fmt.Printf("Enter (q) to Quit: ")
-	fmt.Scan(&userInput)
 }
 
 func printMenu() {
-	fmt.Println("Please select an option down below: (press (q) to quit)")
+	fmt.Println("Select an option: (press Q to quit)")
 	fmt.Println("\t1. sort")
 	fmt.Println("\t2. unsort")
 	fmt.Println("\t3. help")
 }
 
 func printHeader() {
-	fmt.Printf("#_-_-_# Go File Sorter v1.0 #_-_-_#\n\n")
+	fmt.Printf("___ Go File Sorter v1.0 ___\n\n")
 }
 
 func printHelp() {
-	fmt.Printf("\n-- HELP --\n")
+	fmt.Printf("\n-- HELP --\n\n")
 	fmt.Println("(1) - SORT: sorts the chosen directory non recursively (not including other folders). It will only sort top level files.")
 	fmt.Printf("(2) - UNSORT: unsorts the entire directory recursively and move files outside to the root directory. (USE CAREFULLY)\n\n")
 }
@@ -87,13 +89,15 @@ func getFolder(operation string) string {
 		log.Fatal(err)
 	}
 
-	fmt.Printf("\nDo you really wish to %s this directory (y/n)?\n", strings.ToUpper(operation))
+	fmt.Printf("\nDo you really wish to (%s) this directory? (y/n)\n", strings.ToUpper(operation))
 	fmt.Printf("%s: ", path)
 
 	var input string
 	fmt.Scan(&input)
 
-	if input == "y" || input == "Y" {
+	input = strings.ToLower(input)
+
+	if input == "y" || input == "yes" {
 		return path
 	} else {
 		os.Exit(0)
