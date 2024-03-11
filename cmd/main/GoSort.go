@@ -11,10 +11,13 @@ import (
 	"github.com/sqweek/dialog"
 	"github.com/theMyle/goFileSorter/internal/sort"
 	"github.com/theMyle/goFileSorter/internal/unsort"
+	"github.com/theMyle/goFileSorter/test"
 )
 
 func main() {
-	AppRun()
+	// AppRun()
+
+	test.ScanDir("C:\\Users\\jangk\\Documents\\Games")
 }
 
 func AppRun() {

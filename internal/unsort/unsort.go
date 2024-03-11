@@ -2,8 +2,6 @@ package unsort
 
 import (
 	"fmt"
-	"os"
-	"path/filepath"
 	"time"
 
 	"github.com/theMyle/goFileSorter/internal/directory"
@@ -12,59 +10,28 @@ import (
 
 func Unsort(root string) {
 	fmt.Printf("\n--- UNSORTING ---\n\n")
-
 	startTime := time.Now()
 
-	// Look for files
+	// Parse Files
 	fmt.Print("Parsing Files ")
-	files, folders := directory.Scan(root)
-
-	for _, dir := range folders {
-		directory.ScanRecursive(dir, &files, &folders)
-	}
-
+	_, files, folders := directory.ScanDirRecursive(root)
 	fmt.Printf("\t[/] ")
 	fmt.Printf("\t- %d files\n", len(files))
 
-	// move files
+	// Move Files
 	fmt.Print("Moving Files ")
 	fle.MoveFiles(files, root)
 	fmt.Println("\t[/]")
 
-	// clean empty folder
+	// Clean Empty Folders
 	fmt.Print("Cleanup ")
 	for _, v := range folders {
-		cleanUp(v)
+		directory.CleanUp(v)
 	}
 	fmt.Println("\t[/]")
 
+	// Finish
 	elapsedTime := time.Since(startTime)
 	fmt.Println("Finished \t[/]")
 	fmt.Printf("\nTotal execution time: (%v)\n", elapsedTime)
-}
-
-func cleanUp(dir string) {
-	entries, _ := os.ReadDir(dir)
-
-	folders := make([]string, 0)
-
-	for _, v := range entries {
-		absPath := filepath.Join(dir, v.Name())
-		if v.IsDir() {
-			cleanUp(absPath)
-
-			if directory.IsEmpty(absPath) {
-				folders = append(folders, absPath)
-			}
-		}
-	}
-
-	for _, folder := range folders {
-		os.Remove(folder)
-	}
-
-	entries, _ = os.ReadDir(dir)
-	if len(entries) == 0 {
-		os.Remove(dir)
-	}
 }
