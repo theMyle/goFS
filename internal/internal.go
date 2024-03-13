@@ -17,21 +17,6 @@ func MakeUniqueMap(fileNames []string) map[string]bool {
 	return uniqueMap
 }
 
-func FilterDuplicated(mp map[string]bool) (unique []string, duplicated []string) {
-	uniqueFile := make([]string, 0)
-	duplicatedFile := make([]string, 0)
-
-	for fileName, uniq := range mp {
-		if uniq {
-			uniqueFile = append(uniqueFile, fileName)
-		} else {
-			duplicatedFile = append(duplicatedFile, fileName)
-		}
-	}
-
-	return uniqueFile, duplicatedFile
-}
-
 func IsUnique(name string, mp map[string]bool) bool {
 	return mp[name]
 }

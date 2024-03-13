@@ -10,14 +10,10 @@ import (
 
 	"github.com/sqweek/dialog"
 	"github.com/theMyle/goFileSorter/internal/sort"
-	"github.com/theMyle/goFileSorter/internal/unsort"
-	"github.com/theMyle/goFileSorter/test"
 )
 
 func main() {
-	// AppRun()
-
-	test.ScanDir("C:\\Users\\jangk\\Documents\\Games")
+	AppRun()
 }
 
 func AppRun() {
@@ -37,7 +33,7 @@ func AppRun() {
 			loop = false
 		case "2":
 			path := getFolder("unsort")
-			unsort.Unsort(path)
+			sort.Unsort(path)
 			loop = false
 		case "3":
 			printHelp()
@@ -60,13 +56,13 @@ func printMenu() {
 }
 
 func printHeader() {
-	fmt.Printf("___ Go File Sorter v1.0 ___\n\n")
+	fmt.Printf("<____> Go File Sorter v1.0 <____>\n")
 }
 
 func printHelp() {
-	fmt.Printf("\n-- HELP --\n\n")
-	fmt.Println("(1) - SORT: sorts the chosen directory non recursively (not including other folders). It will only sort top level files.")
-	fmt.Printf("(2) - UNSORT: unsorts the entire directory recursively and move files outside to the root directory. (USE CAREFULLY)\n\n")
+	fmt.Printf("\n-- HELP --\n")
+	fmt.Println("\tsort - ")
+	fmt.Printf("\tunsort - \n\n")
 }
 
 func clearScreen() {

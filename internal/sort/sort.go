@@ -27,7 +27,7 @@ func Sort(path string) {
 	startTime := time.Now()
 
 	// Parse Files
-	fmt.Print("Parsing Files ")
+	fmt.Print("PARSING FILES")
 	entries, err := os.ReadDir(path)
 	if err != nil {
 		log.Fatal(err)
@@ -35,8 +35,8 @@ func Sort(path string) {
 
 	files := getFiles(entries)
 	gosortFolderPath := createFolder(path, goSortFolderName)
-	fmt.Printf("\t[/] ")
-	fmt.Printf("\t- %d files\n", len(files))
+	fmt.Printf("\t[/]")
+	fmt.Printf("\t-- Files: [ %v ]\n", len(files))
 
 	// Initialize map
 	mp := make(map[string]string, 0)
@@ -47,7 +47,7 @@ func Sort(path string) {
 	addMap(mp, documentsExt, internalFolders[4])
 
 	// Move Files
-	fmt.Print("Moving Files ")
+	fmt.Print("MOVING FILES")
 	for _, v := range files {
 		fileName := filepath.Ext(v)
 		var extension string
@@ -72,7 +72,7 @@ func Sort(path string) {
 
 	elapsedTime := time.Since(startTime)
 	fmt.Println("Finished \t[/]")
-	fmt.Printf("\n- Total execution time: (%v)", elapsedTime)
+	fmt.Printf("\nTotal execution time: [ %v ]", elapsedTime)
 }
 
 func createFolder(path string, folderName string) string {
