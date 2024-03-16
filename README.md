@@ -13,6 +13,7 @@ A simple CLI app for sorting files
 ## Usage
 Run the executable or use "go run" command if you cloned the repo.
 ```
+PS C:\Users\jangk\Documents\Programming\go\goFileSorter> go run .\cmd\main\GoSort.go
 <____> Go File Sorter v1.0 <____>
 
 Select an option: (press Q to quit)
