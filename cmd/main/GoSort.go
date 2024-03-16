@@ -59,6 +59,11 @@ func defaultRun() {
 			fmt.Print("Please try again")
 		}
 	}
+
+	fmt.Println("Press Enter to exit...")
+	reader := bufio.NewReader(os.Stdin)
+	reader.ReadString('\n')
+	reader.ReadString('\n')
 }
 
 func printMenu() {
