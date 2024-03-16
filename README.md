@@ -35,5 +35,23 @@ Finished        [/]
 
 Total execution time: [ 8.3128ms ]
 ````
+## Samples
+Help Command
+``` 
+-- HELP --
+1. [ sort ]:
+        -- sorts the files inside the chosen directory (not including ones inside folders).
 
-## Examples
+2. [ unsort ]:
+        -- unsorts all files and folders inside the chosen directory.
+
+3. [ filter & copy ]:
+        -- filters all files with the specified extension and creates a copy in a separate directory.
+
+4. [ filter & move ]:
+        -- filters all files with the specified extension and moves it into a separated directory.
+```
+
+## Notes
+- filter & copy seems to be the slowest.
+- unsort will literally unsort everything so be careful.
