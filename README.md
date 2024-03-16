@@ -35,8 +35,8 @@ Finished        [/]
 
 Total execution time: [ 8.3128ms ]
 ````
+
 ## Samples
-Help Command
 ``` 
 -- HELP --
 1. [ sort ]:
