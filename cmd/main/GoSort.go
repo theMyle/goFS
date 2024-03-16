@@ -1,6 +1,7 @@
 package main
 
 import (
+	"bufio"
 	"fmt"
 	"log"
 	"os"
@@ -13,10 +14,10 @@ import (
 )
 
 func main() {
-	AppRun()
+	defaultRun()
 }
 
-func AppRun() {
+func defaultRun() {
 	printHeader()
 	printMenu()
 
@@ -36,6 +37,18 @@ func AppRun() {
 			sort.Unsort(path)
 			loop = false
 		case "3":
+			filterFlag := "copy"
+			path := getFolder("filter & copy")
+			extensions := getFileExtensions()
+			sort.Filter(path, filterFlag, extensions)
+			loop = false
+		case "4":
+			filterFlag := "move"
+			path := getFolder("filter & move")
+			extensions := getFileExtensions()
+			sort.Filter(path, filterFlag, extensions)
+			loop = false
+		case "5":
 			printHelp()
 			printMenu()
 		case "q":
@@ -43,7 +56,7 @@ func AppRun() {
 		case "Q":
 			os.Exit(0)
 		default:
-			fmt.Println("Please try again")
+			fmt.Print("Please try again")
 		}
 	}
 }
@@ -52,17 +65,29 @@ func printMenu() {
 	fmt.Println("Select an option: (press Q to quit)")
 	fmt.Println("\t1. sort")
 	fmt.Println("\t2. unsort")
-	fmt.Println("\t3. help")
+	fmt.Println("\t3. filter & copy")
+	fmt.Println("\t4. filter & move")
+	fmt.Println("\t5. help")
 }
 
 func printHeader() {
-	fmt.Printf("<____> Go File Sorter v1.0 <____>\n")
+	fmt.Printf("<____> Go File Sorter v1.0 <____>\n\n")
 }
 
 func printHelp() {
 	fmt.Printf("\n-- HELP --\n")
-	fmt.Println("\tsort - ")
-	fmt.Printf("\tunsort - \n\n")
+
+	fmt.Println("1. [ sort ]: ")
+	fmt.Printf("\t-- sorts the files inside the chosen directory (not including ones inside folders).\n\n")
+
+	fmt.Println("2. [ unsort ]: ")
+	fmt.Printf("\t-- unsorts all files and folders inside the chosen directory.\n\n")
+
+	fmt.Println("3. [ filter & copy ]: ")
+	fmt.Printf("\t-- filters all files with the specified extension and creates a copy in a separate directory.\n\n")
+
+	fmt.Println("4. [ filter & move ]: ")
+	fmt.Printf("\t-- filters all files with the specified extension and moves it into a separated directory.\n\n")
 }
 
 func clearScreen() {
@@ -103,4 +128,20 @@ func getFolder(operation string) string {
 	}
 
 	return path
+}
+
+func getFileExtensions() []string {
+	fmt.Println("\nEnter the file extension\\s the you wish to filter: ")
+
+	reader := bufio.NewReader(os.Stdin)
+	reader.ReadString('\n')
+	ext, _ := reader.ReadString('\n')
+
+	extensions := strings.Split(strings.TrimSpace(ext), " ")
+
+	for i, ext := range extensions {
+		extensions[i] = strings.ToLower(ext)
+	}
+
+	return extensions
 }

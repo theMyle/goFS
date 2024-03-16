@@ -5,7 +5,11 @@ import (
 	"os"
 	"path/filepath"
 	"sync"
+
+	"github.com/theMyle/goFileSorter/internal/config"
 )
+
+var goFilter string = config.GoFilterFolderName
 
 func CleanUp(dir string) {
 	entries, _ := os.ReadDir(dir)
@@ -39,22 +43,6 @@ func IsEmpty(dir string) bool {
 		return false
 	}
 	return len(entries) == 0
-}
-
-func ScanRoot(path string) (files []string, folders []string) {
-	entries, err := os.ReadDir(path)
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	for _, v := range entries {
-		absPath := filepath.Join(path, v.Name())
-		if v.IsDir() {
-			folders = append(folders, absPath)
-		}
-	}
-
-	return files, folders
 }
 
 func ScanDir(path string) (files []string, folders []string) {
@@ -108,8 +96,10 @@ func scanDirRecursive(path string, filesChan chan string, foldersChan chan strin
 	for _, item := range entries {
 		absPath := filepath.Join(path, item.Name())
 		if item.IsDir() {
-			subDir = append(subDir, absPath)
-			foldersChan <- absPath
+			if item.Name() != goFilter {
+				subDir = append(subDir, absPath)
+				foldersChan <- absPath
+			}
 		} else {
 			filesChan <- absPath
 		}
@@ -120,4 +110,15 @@ func scanDirRecursive(path string, filesChan chan string, foldersChan chan strin
 		wg.Add(1)
 		go scanDirRecursive(dir, filesChan, foldersChan, wg)
 	}
+}
+
+func CreateFolder(path string, folderName string) string {
+	folder := filepath.Join(path, folderName)
+
+	err := os.MkdirAll(folder, 0777)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	return folder
 }

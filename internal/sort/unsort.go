@@ -2,11 +2,14 @@ package sort
 
 import (
 	"fmt"
+	"log"
+	"os"
+	"path/filepath"
+	"strings"
 	"sync"
 	"time"
 
 	"github.com/theMyle/goFileSorter/internal/directory"
-	"github.com/theMyle/goFileSorter/internal/file"
 )
 
 func Unsort(root string) {
@@ -35,30 +38,103 @@ func Unsort(root string) {
 	fmt.Println("\t[/]")
 
 	// Finish
-	elapsedTime := time.Since(startTime)
-	fmt.Println("Finished \t[/]")
-	fmt.Printf("\nTotal execution time: [ %v ]\n", elapsedTime)
+	Finish(startTime)
 }
 
 func move(files []string, destPath string) {
 	var wg sync.WaitGroup
 
 	// Separate files
-	unique, duplicated := file.FilterDuplicated(files)
+	unique, duplicated := filterDuplicated(files)
 
 	wg.Add(1)
 	go func() {
 		defer wg.Done()
-		for _, v := range unique {
-			file.MoveFile(v, destPath)
+		for _, absPath := range unique {
+			moveFileBasic(absPath, destPath)
 		}
 	}()
 
 	wg.Add(1)
 	go func() {
 		defer wg.Done()
-		file.MoveFileSlow(duplicated, destPath)
+		moveFileComplex(duplicated, destPath)
 	}()
 
 	wg.Wait()
+}
+
+func moveFileComplex(files []string, destPath string) {
+	for _, absPath := range files {
+		file, err := os.Stat(absPath)
+		if err != nil {
+			log.Fatal(err)
+		}
+
+		name := file.Name()
+		newPath := filepath.Join(destPath, name)
+
+		if absPath == newPath {
+			return
+		}
+
+		if _, err := os.Stat(newPath); err == nil {
+			base := strings.TrimSuffix(name, filepath.Ext(name))
+			ext := filepath.Ext(name)
+			counter := 1
+			for {
+				altName := fmt.Sprintf("%s (%d)%s", base, counter, ext)
+				altPath := filepath.Join(destPath, altName)
+				if _, err := os.Stat(altPath); os.IsNotExist(err) {
+					newPath = altPath
+					break
+				}
+				counter++
+			}
+		}
+
+		err = os.Rename(absPath, newPath)
+		if err != nil {
+			log.Fatal(err)
+		}
+	}
+}
+
+func moveFileBasic(absPath string, destPath string) {
+	_, name := filepath.Split(absPath)
+	newPath := filepath.Join(destPath, name)
+
+	if absPath == newPath {
+		return
+	}
+
+	err := os.Rename(absPath, newPath)
+	if err != nil {
+		log.Fatal(err)
+	}
+}
+
+func filterDuplicated(files []string) (unique []string, hasCopy []string) {
+	uniqueMap := make(map[string]bool)
+
+	for _, file := range files {
+		_, fileName := filepath.Split(file)
+		if uniqueMap[fileName] {
+			uniqueMap[fileName] = false
+		} else {
+			uniqueMap[fileName] = true
+		}
+	}
+
+	for _, file := range files {
+		_, fileName := filepath.Split(file)
+		if uniqueMap[fileName] {
+			unique = append(unique, file)
+		} else {
+
+			hasCopy = append(hasCopy, file)
+		}
+	}
+
+	return unique, hasCopy
 }
