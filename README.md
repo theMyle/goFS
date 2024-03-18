@@ -54,17 +54,17 @@ Total execution time: [ 8.3128ms ]
 ## Installation
 ```bash
 git clone https://github.com/theMyle/goFileSorter.git
-go get github.com/sqweek/dialog
-go install ./goFileSorter/cmd/main/GoSort.go
+cd goFileSorter
 
-# Run by executing GoSort.exe
-GoSort
+# Install and Run
+go install ./cmd/main/GoSort.go
+GoSort  #Run by calling GoSort
 ```
 
 ## Uninstall
 ```bash
 # Windows
-rm $env:GOPATH/bin/GoSort
+rm $env:GOPATH/bin/GoSort.exe
 
 # Linux
 rm $GOPATH/bin/GoSort
