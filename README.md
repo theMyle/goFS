@@ -52,7 +52,7 @@ Total execution time: [ 8.3128ms ]
 ```
 
 ## Installation
-```cmd
+```bash
 git clone https://github.com/theMyle/goFileSorter.git
 go install .\goFileSorter\cmd\main\GoSort.go
 
@@ -61,7 +61,7 @@ GoSort
 ```
 
 ## Uninstall
-```cmd
+```bash
 # Windows
 rm $env:GOPATH/bin/GoSort
 
