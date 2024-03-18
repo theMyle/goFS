@@ -11,7 +11,7 @@ A simple CLI app for sorting files
   - *filter & copy* - copies files.
 
 ## Usage
-```bash
+```cmd
 PS C:\Users\jangk\Documents\Programming\go\goFileSorter> go run .\cmd\main\GoSort.go
 <____> Go File Sorter v1.0 <____>
 
@@ -35,8 +35,8 @@ Finished        [/]
 Total execution time: [ 8.3128ms ]
 ````
 
-## Samples
-```bash
+## Help
+```cmd
 -- HELP --
 1. [ sort ]:
         -- sorts the files inside the chosen directory (not including ones inside folders).
@@ -51,27 +51,27 @@ Total execution time: [ 8.3128ms ]
         -- filters all files with the specified extension and moves it into a separated directory.
 ```
 
-## Notes
-- filter & copy seems to be the slowest.
-- unsort will literally unsort everything so be careful.
-
 ## Installation
 ```
 git clone https://github.com/theMyle/goFileSorter.git
 go install .\goFileSorter\cmd\main\GoSort.go
 
-# run by calling
+# Run by executing GoSort.exe
 GoSort
 ```
 
 ## Uninstall
-```bash
+```
 # Windows
 rm $env:GOPATH/bin/GoSort
 
 # Linux
 rm $GOPATH/bin/GoSort
 ```
+
+## Notes
+- filter & copy seems to be the slowest.
+- unsort will literally unsort everything so be careful.
 
 ## Issue/s
 - error when file have no extension
