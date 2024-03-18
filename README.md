@@ -11,7 +11,6 @@ A simple CLI app for sorting files
   - *filter & copy* - copies files.
 
 ## Usage
-Run the executable or use "go run" command if you cloned the repo.
 ```
 PS C:\Users\jangk\Documents\Programming\go\goFileSorter> go run .\cmd\main\GoSort.go
 <____> Go File Sorter v1.0 <____>
@@ -56,8 +55,25 @@ Total execution time: [ 8.3128ms ]
 - filter & copy seems to be the slowest.
 - unsort will literally unsort everything so be careful.
 
+## Installation
+```
+git clone https://github.com/theMyle/goFileSorter.git
+go install .\goFileSorter\cmd\main\GoSort.go
+```
+
+### 2 ways to run:
+1. If installed using "go install", run it inside the terminal
+```
+GoSort
+```
+2. Run the main file directly
+```
+cd goFileSorter
+go run .\cmd\main\GoSort.go
+```
+
 ## Issue/s
 - error when file have no extension
 
-## Installation
+
 
