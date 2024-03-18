@@ -55,3 +55,9 @@ Total execution time: [ 8.3128ms ]
 ## Notes
 - filter & copy seems to be the slowest.
 - unsort will literally unsort everything so be careful.
+
+## Issue/s
+- error when file have no extension
+
+## Installation
+
