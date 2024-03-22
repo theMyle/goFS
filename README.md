@@ -4,13 +4,13 @@ A simple CLI app for sorting files
 
 ## Features
 
-- **SORT**: Sorts top level files in the chosen directory (not including
+- `SORT`: Sorts top level files in the chosen directory (not including
   directories).
-- **UNSORT**: Unsorts all files in the chosen directory (recursively).
-- **FILTER**: Filters files with the specified file extensions in the chosen
+- `UNSORT`: Unsorts all files in the chosen directory (recursively).
+- `FILTER`: Filters files with the specified file extensions in the chosen
   directory.
-  - _filter & move_ - moves files.
-  - _filter & copy_ - copies files.
+  - `_filter & move_` - moves files.
+  - `_filter & copy_` - copies files.
 
 # Usage
 
