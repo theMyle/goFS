@@ -120,17 +120,19 @@ Press Enter to exit...
 ```bash
 git clone https://github.com/theMyle/goFileSorter.git
 cd goFileSorter
-
-# Install and Run
 go install .
-gofilesorter #Run by calling the app
+gofilesorter
 ```
+you can now launch the app by simply typing `gofilesorter` in the commandline 
 
 # Uninstall
 
 ```bash
 # Windows
+## PowerShell
 rm $env:GOPATH/bin/gofilesorter.exe
+## CMD
+rm %GOPATH%/bin/gofilesorter.exe
 
 # Linux
 rm $GOPATH/bin/gofilesorter
