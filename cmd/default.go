@@ -1,28 +1,23 @@
-package main
+package cmd
 
 import (
 	"bufio"
 	"fmt"
 	"log"
 	"os"
-	"os/exec"
-	"runtime"
 	"strings"
 
 	"github.com/sqweek/dialog"
 	"github.com/theMyle/goFileSorter/internal/sort"
 )
 
-func main() {
-	defaultRun()
-}
-
-func defaultRun() {
+func DefaultRun() {
 	printHeader()
 	printMenu()
 
 	var userInput string
 	var loop bool = true
+	reader := bufio.NewReader(os.Stdin)
 
 	for loop {
 		fmt.Printf(">> ")
@@ -32,10 +27,12 @@ func defaultRun() {
 			path := getFolder("sort")
 			sort.Sort(path)
 			loop = false
+			reader.ReadString('\n')
 		case "2":
 			path := getFolder("unsort")
 			sort.Unsort(path)
 			loop = false
+			reader.ReadString('\n')
 		case "3":
 			filterFlag := "copy"
 			path := getFolder("filter & copy")
@@ -61,8 +58,6 @@ func defaultRun() {
 	}
 
 	fmt.Println("Press Enter to exit...")
-	reader := bufio.NewReader(os.Stdin)
-	reader.ReadString('\n')
 	reader.ReadString('\n')
 }
 
@@ -93,23 +88,6 @@ func printHelp() {
 
 	fmt.Println("4. [ filter & move ]: ")
 	fmt.Printf("\t-- filters all files with the specified extension and moves it into a separated directory.\n\n")
-}
-
-func clearScreen() {
-	osName := runtime.GOOS
-	var cmd *exec.Cmd
-
-	if osName == "windows" {
-		cmd = exec.Command("cmd", "/c", "cls")
-	} else if osName == "linux" {
-		cmd = exec.Command("clear")
-	} else {
-		panic("Unsupported operating system")
-	}
-
-	cmd.Stdout = os.Stdout
-	cmd.Run()
-	printHeader()
 }
 
 func getFolder(operation string) string {

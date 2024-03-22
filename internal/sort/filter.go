@@ -100,10 +100,14 @@ func parseFiles(path string, extensions []string) (results [][]string) {
 
 	// Append files with the appropriate extensions
 	for _, file := range files {
-		fileExt := filepath.Ext(file)[1:]
-		if uniqueMap[fileExt] {
-			extensionsMap[fileExt] = append(extensionsMap[fileExt], file)
+		fileExt := filepath.Ext(file)
+		if fileExt != "" {
+			fileExt = fileExt[1:]
+			if uniqueMap[fileExt] {
+				extensionsMap[fileExt] = append(extensionsMap[fileExt], file)
+			}
 		}
+
 	}
 
 	// Append all to the results array
