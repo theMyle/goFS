@@ -1,19 +1,14 @@
-package directory
+package internal
 
 import (
 	"log"
 	"os"
 	"path/filepath"
 	"sync"
-
-	"github.com/theMyle/goFileSorter/internal/config"
 )
-
-var goFilter string = config.GoFilterFolderName
 
 func CleanUp(dir string) {
 	entries, _ := os.ReadDir(dir)
-
 	folders := make([]string, 0)
 
 	for _, v := range entries {
@@ -37,10 +32,11 @@ func CleanUp(dir string) {
 	}
 }
 
+// Check if dir is empty
 func IsEmpty(dir string) bool {
 	entries, err := os.ReadDir(dir)
 	if err != nil {
-		return false
+		log.Fatal("error reading directory: ", err)
 	}
 	return len(entries) == 0
 }

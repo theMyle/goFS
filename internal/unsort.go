@@ -1,4 +1,4 @@
-package sort
+package internal
 
 import (
 	"fmt"
@@ -7,38 +7,31 @@ import (
 	"path/filepath"
 	"strings"
 	"sync"
-	"time"
-
-	"github.com/theMyle/goFileSorter/internal/directory"
 )
 
 func Unsort(root string) {
 	fmt.Printf("\n--- UNSORTING ---\n\n")
-	startTime := time.Now()
 
 	// Parse Files
 	fmt.Print("PARSING FILES ")
 
-	files, folders := directory.ScanDir(root)
+	files, folders := ScanDir(root)
 
 	fmt.Printf("\t[/] ")
-	fmt.Printf("\t-- Files: [ %d ] -- Folders: [ %d ] -- Time: [ %v ] --\n", len(files), len(folders), time.Since(startTime))
+	fmt.Printf("\t-- Files: [ %d ] -- Folders: [ %d ] --\n", len(files), len(folders))
 
 	// Move Files
 	fmt.Print("MOVING FILES ")
+
 	move(files, root)
 	fmt.Print("\t[/] ")
-	fmt.Printf("\t-- Time: [ %v ]\n", time.Since(startTime))
 
 	// Clean Empty Folders
 	fmt.Print("CLEANUP ")
 	for _, v := range folders {
-		directory.CleanUp(v)
+		CleanUp(v)
 	}
 	fmt.Println("\t[/]")
-
-	// Finish
-	Finish(startTime)
 }
 
 func move(files []string, destPath string) {

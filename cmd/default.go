@@ -8,7 +8,7 @@ import (
 	"strings"
 
 	"github.com/sqweek/dialog"
-	"github.com/theMyle/goFileSorter/internal/sort"
+	"github.com/theMyle/goFileSorter/internal"
 )
 
 func DefaultRun() {
@@ -25,25 +25,25 @@ func DefaultRun() {
 		switch userInput {
 		case "1":
 			path := getFolder("sort")
-			sort.Sort(path)
+			internal.Sort(path)
 			loop = false
 			reader.ReadString('\n')
 		case "2":
 			path := getFolder("unsort")
-			sort.Unsort(path)
+			internal.Unsort(path)
 			loop = false
 			reader.ReadString('\n')
 		case "3":
 			filterFlag := "copy"
 			path := getFolder("filter & copy")
 			extensions := getFileExtensions()
-			sort.Filter(path, filterFlag, extensions)
+			internal.Filter(path, filterFlag, extensions)
 			loop = false
 		case "4":
 			filterFlag := "move"
 			path := getFolder("filter & move")
 			extensions := getFileExtensions()
-			sort.Filter(path, filterFlag, extensions)
+			internal.Filter(path, filterFlag, extensions)
 			loop = false
 		case "5":
 			printHelp()
@@ -71,7 +71,7 @@ func printMenu() {
 }
 
 func printHeader() {
-	fmt.Printf("<____> Go File Sorter v1.0 <____>\n\n")
+	fmt.Printf("Go File Sorter\n\n")
 }
 
 func printHelp() {

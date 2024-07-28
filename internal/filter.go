@@ -1,4 +1,4 @@
-package sort
+package internal
 
 import (
 	"fmt"
@@ -9,12 +9,7 @@ import (
 	"strings"
 	"sync"
 	"time"
-
-	"github.com/theMyle/goFileSorter/internal/config"
-	"github.com/theMyle/goFileSorter/internal/directory"
 )
-
-var goFilter string = config.GoFilterFolderName
 
 func Filter(path string, flagInput string, extensions []string) {
 	copyFlag := false
@@ -51,14 +46,14 @@ func Filter(path string, flagInput string, extensions []string) {
 			moveOrCopy = moveFile
 		}
 
-		goFilterFolder := directory.CreateFolder(path, goFilter)
+		goFilterFolder := CreateFolder(path, goFilter)
 
 		var wg sync.WaitGroup
 		for _, list := range files {
 			wg.Add(1)
 			go func() {
 				extension := strings.ToLower(filepath.Ext(list[0])[1:])
-				destPath := directory.CreateFolder(goFilterFolder, extension)
+				destPath := CreateFolder(goFilterFolder, extension)
 				for _, file := range list {
 					moveOrCopy(file, destPath)
 				}
@@ -84,7 +79,7 @@ func checkFlag(input string, check string, flag *bool) {
 }
 
 func parseFiles(path string, extensions []string) (results [][]string) {
-	files, _ := directory.ScanDir(path)
+	files, _ := ScanDir(path)
 
 	// Create a unique map
 	uniqueMap := make(map[string]bool)
