@@ -79,7 +79,7 @@ func checkFlag(input string, check string, flag *bool) {
 }
 
 func parseFiles(path string, extensions []string) (results [][]string) {
-	files, _ := ScanDir(path)
+	files, _, _ := ScanDirRecursive(path)
 
 	// Create a unique map
 	uniqueMap := make(map[string]bool)

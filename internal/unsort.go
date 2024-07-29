@@ -5,8 +5,7 @@ import (
 	"log"
 	"os"
 	"path/filepath"
-	"strings"
-	"sync"
+	"time"
 )
 
 func Unsort(root string) {
@@ -14,120 +13,59 @@ func Unsort(root string) {
 
 	// Parse Files
 	fmt.Print("PARSING FILES ")
+	startTime := time.Now()
 
-	files, folders := ScanDir(root)
+	filePaths, folderPaths, err := ScanDirRecursive(root)
+	if err != nil {
+		log.Fatal("error scanning directory:", err)
+	}
 
 	fmt.Printf("\t[/] ")
-	fmt.Printf("\t-- Files: [ %d ] -- Folders: [ %d ] --\n", len(files), len(folders))
+	fmt.Printf("\t--Time: [ %.2f ] -- Files: [ %d ] -- Folders: [ %d ] --\n",
+		time.Since(startTime).Seconds(),
+		len(filePaths),
+		len(folderPaths))
 
 	// Move Files
 	fmt.Print("MOVING FILES ")
+	startTime = time.Now()
 
-	move(files, root)
-	fmt.Print("\t[/] ")
-
-	// Clean Empty Folders
-	fmt.Print("CLEANUP ")
-	for _, v := range folders {
-		CleanUp(v)
-	}
-	fmt.Println("\t[/]")
-}
-
-func move(files []string, destPath string) {
-	var wg sync.WaitGroup
-
-	// Separate files
-	unique, duplicated := filterDuplicated(files)
-
-	wg.Add(1)
-	go func() {
-		defer wg.Done()
-		for _, absPath := range unique {
-			moveFileBasic(absPath, destPath)
+	errMsg := "file already exists in destination:\n"
+	defer func() {
+		if errMsg != "" {
+			fmt.Println("Some duplicated files failed to move")
 		}
 	}()
 
-	wg.Add(1)
-	go func() {
-		defer wg.Done()
-		moveFileComplex(duplicated, destPath)
-	}()
+	for _, sourcePath := range filePaths {
+		fileName := filepath.Base(sourcePath)
+		destPath := filepath.Join(root, fileName)
 
-	wg.Wait()
-}
-
-func moveFileComplex(files []string, destPath string) {
-	for _, absPath := range files {
-		file, err := os.Stat(absPath)
-		if err != nil {
-			log.Fatal(err)
-		}
-
-		name := file.Name()
-		newPath := filepath.Join(destPath, name)
-
-		if absPath == newPath {
-			return
-		}
-
-		if _, err := os.Stat(newPath); err == nil {
-			base := strings.TrimSuffix(name, filepath.Ext(name))
-			ext := filepath.Ext(name)
-			counter := 1
-			for {
-				altName := fmt.Sprintf("%s (%d)%s", base, counter, ext)
-				altPath := filepath.Join(destPath, altName)
-				if _, err := os.Stat(altPath); os.IsNotExist(err) {
-					newPath = altPath
-					break
-				}
-				counter++
+		// Check for duplicates
+		if _, err := os.Stat(destPath); err == nil {
+			if sourcePath != destPath {
+				errMsg += fmt.Sprintf("%v\n", sourcePath)
+			}
+		} else {
+			if sourcePath != destPath {
+				os.Rename(sourcePath, destPath)
 			}
 		}
-
-		err = os.Rename(absPath, newPath)
-		if err != nil {
-			log.Fatal(err)
-		}
-	}
-}
-
-func moveFileBasic(absPath string, destPath string) {
-	_, name := filepath.Split(absPath)
-	newPath := filepath.Join(destPath, name)
-
-	if absPath == newPath {
-		return
 	}
 
-	err := os.Rename(absPath, newPath)
+	fmt.Printf("\t[/] ")
+	fmt.Printf("\t--Time: [ %.2f ]\n", time.Since(startTime).Seconds())
+
+	// Clean Empty Folders
+	fmt.Print("CLEAN-UP")
+	startTime = time.Now()
+
+	err = DeleteEmptyFolders(folderPaths)
 	if err != nil {
-		log.Fatal(err)
-	}
-}
-
-func filterDuplicated(files []string) (unique []string, hasCopy []string) {
-	uniqueMap := make(map[string]bool)
-
-	for _, file := range files {
-		_, fileName := filepath.Split(file)
-		if uniqueMap[fileName] {
-			uniqueMap[fileName] = false
-		} else {
-			uniqueMap[fileName] = true
-		}
+		log.Fatal("error deleting empty folders:", err)
+		fmt.Println("err os.rename")
 	}
 
-	for _, file := range files {
-		_, fileName := filepath.Split(file)
-		if uniqueMap[fileName] {
-			unique = append(unique, file)
-		} else {
-
-			hasCopy = append(hasCopy, file)
-		}
-	}
-
-	return unique, hasCopy
+	fmt.Print("\t[/]")
+	fmt.Printf("\t-- Time: [ %.2fs ]\n\n", time.Since(startTime).Seconds())
 }

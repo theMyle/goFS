@@ -62,7 +62,7 @@ func DefaultRun() {
 }
 
 func printMenu() {
-	fmt.Println("Select an option: (press Q to quit)")
+	fmt.Println("Select an option: (enter Q to quit)")
 	fmt.Println("\t1. sort")
 	fmt.Println("\t2. unsort")
 	fmt.Println("\t3. filter & copy")
@@ -71,7 +71,7 @@ func printMenu() {
 }
 
 func printHeader() {
-	fmt.Printf("Go File Sorter\n\n")
+	fmt.Printf("Go File Sorter by theMyle\n\n")
 }
 
 func printHelp() {
@@ -91,13 +91,13 @@ func printHelp() {
 }
 
 func getFolder(operation string) string {
-	path, err := dialog.Directory().Title("Choose directory").Browse()
+	path, err := dialog.Directory().Title("Go File Sorter").Browse()
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	fmt.Printf("\nDo you really wish to (%s) this directory? (y/n)\n", strings.ToUpper(operation))
-	fmt.Printf("%s: ", path)
+	fmt.Printf("\nDo you really wish to %s this directory?\n", strings.ToLower(operation))
+	fmt.Printf("[%s] (y/n): ", path)
 
 	var input string
 	fmt.Scan(&input)

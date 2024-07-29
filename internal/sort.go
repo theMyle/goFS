@@ -2,11 +2,11 @@ package internal
 
 import (
 	"fmt"
-	"io/fs"
 	"log"
 	"os"
 	"path/filepath"
 	"strings"
+	"time"
 )
 
 func Sort(basePath string) {
@@ -14,16 +14,16 @@ func Sort(basePath string) {
 
 	// Parse Files
 	fmt.Print("PARSING FILES")
-	entries, err := os.ReadDir(basePath)
+	startTime := time.Now()
+	filePaths, folderPaths, err := ScanDirRecursive(basePath)
 	if err != nil {
-		log.Fatal("Sort:", err)
+		log.Fatal("error scanning directory:", err)
 	}
 
-	files := GetFiles(entries)
 	gosortFolderPath := CreateFolder(basePath, GoSortFolderName)
 
 	fmt.Printf("\t[/]")
-	fmt.Printf("\t-- Files: [ %v ]\n", len(files))
+	fmt.Printf("\t-- Time: [ %.2fs ] -- Files: [ %v ]\n", time.Since(startTime).Seconds(), len(filePaths))
 
 	// Initialize map
 	mp := make(map[string]string, 0)
@@ -35,12 +35,21 @@ func Sort(basePath string) {
 
 	// Move Files
 	fmt.Print("MOVING FILES")
-	for _, v := range files {
-		fileName := filepath.Ext(v)
+	startTime = time.Now()
+
+	errMsg := "Files already exists in destination:\n"
+	defer func() {
+		if errMsg != "" {
+			fmt.Println("Some duplicated files failed to move")
+		}
+	}()
+
+	for _, v := range filePaths {
+		fileName := filepath.Base(v)
 		var extension string
 
-		if len(fileName) > 0 {
-			extension = strings.ToLower(filepath.Ext(v)[1:])
+		if len(filepath.Ext(fileName)) > 0 {
+			extension = strings.ToLower(filepath.Ext(fileName)[1:])
 		} else {
 			extension = "None"
 		}
@@ -49,30 +58,36 @@ func Sort(basePath string) {
 		if !exists {
 			value = InternalFolders[5]
 		}
+
 		CreateFolder(gosortFolderPath, value)
+		destPath := filepath.Join(basePath, GoSortFolderName, value, fileName)
 
-		origPath := filepath.Join(basePath, v)
-		destPath := filepath.Join(basePath, GoSortFolderName, value, v)
-
-		err := os.Rename(origPath, destPath)
-		if err != nil {
-			log.Fatal("error moving file: ", err)
+		// check if file is already present
+		if _, err := os.Stat(destPath); err == nil {
+			if v != destPath {
+				errMsg += fmt.Sprintf("%v\n", v)
+			}
+		} else {
+			if v != destPath {
+				os.Rename(v, destPath)
+			}
 		}
 	}
 
-	fmt.Println("\t[/]")
-}
+	fmt.Print("\t[/]")
+	fmt.Printf("\t-- Time: [ %.2fs ]\n", time.Since(startTime).Seconds())
 
-func GetFiles(files []fs.DirEntry) []string {
-	list := make([]string, 0)
+	// Cleanup
+	fmt.Print("CLEAN-UP")
+	startTime = time.Now()
 
-	for _, v := range files {
-		if !v.IsDir() {
-			list = append(list, v.Name())
-		}
+	err = DeleteEmptyFolders(folderPaths)
+	if err != nil {
+		log.Fatal("error deleting empty folders:", err)
 	}
 
-	return list
+	fmt.Print("\t[/]")
+	fmt.Printf("\t-- Time: [ %.2fs ]\n\n", time.Since(startTime).Seconds())
 }
 
 func addMap(mp map[string]string, keys []string, value string) {
