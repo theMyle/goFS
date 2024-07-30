@@ -9,21 +9,25 @@ import (
 	"time"
 )
 
-func Sort(basePath string) {
+func Sort(root string) {
 	fmt.Printf("\n--- SORTING ---\n\n")
 
 	// Parse Files
 	fmt.Print("PARSING FILES")
 	startTime := time.Now()
-	filePaths, folderPaths, err := ScanDirRecursive(basePath)
+
+	filePaths, folderPaths, err := ScanDirRecursive(root)
 	if err != nil {
 		log.Fatal("error scanning directory:", err)
 	}
 
-	gosortFolderPath := CreateFolder(basePath, GoSortFolderName)
-
 	fmt.Printf("\t[/]")
-	fmt.Printf("\t-- Time: [ %.2fs ] -- Files: [ %v ]\n", time.Since(startTime).Seconds(), len(filePaths))
+	fmt.Printf("\t-- Time: [ %.2f ] -- Files: [ %d ] -- Folders: [ %d ] --\n",
+		time.Since(startTime).Seconds(),
+		len(filePaths),
+		len(folderPaths))
+
+	gosortFolderPath := CreateFolder(root, GoSortFolderName)
 
 	// Initialize map
 	mp := make(map[string]string, 0)
@@ -60,7 +64,7 @@ func Sort(basePath string) {
 		}
 
 		CreateFolder(gosortFolderPath, value)
-		destPath := filepath.Join(basePath, GoSortFolderName, value, fileName)
+		destPath := filepath.Join(root, GoSortFolderName, value, fileName)
 
 		// check if file is already present
 		if _, err := os.Stat(destPath); err == nil {

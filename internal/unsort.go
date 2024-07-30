@@ -21,7 +21,7 @@ func Unsort(root string) {
 	}
 
 	fmt.Printf("\t[/] ")
-	fmt.Printf("\t--Time: [ %.2f ] -- Files: [ %d ] -- Folders: [ %d ] --\n",
+	fmt.Printf("\t-- Time: [ %.2f ] -- Files: [ %d ] -- Folders: [ %d ] --\n",
 		time.Since(startTime).Seconds(),
 		len(filePaths),
 		len(folderPaths))
@@ -54,7 +54,7 @@ func Unsort(root string) {
 	}
 
 	fmt.Printf("\t[/] ")
-	fmt.Printf("\t--Time: [ %.2f ]\n", time.Since(startTime).Seconds())
+	fmt.Printf("\t-- Time: [ %.2f ]\n", time.Since(startTime).Seconds())
 
 	// Clean Empty Folders
 	fmt.Print("CLEAN-UP")
