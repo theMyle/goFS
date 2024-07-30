@@ -28,14 +28,11 @@ Select an option: (enter Q to quit)
 ## Sort
 
 ```
-Do you really wish to sort this directory?
-[C:\Users\jangk\Downloads\test] (y/n): y
-
 --- SORTING ---
 
-PARSING FILES   [/]     -- Time: [ 7.12s ] -- Files: [ 19483 ]
-MOVING FILES    [/]     -- Time: [ 14.90s ]
-CLEAN-UP        [/]     -- Time: [ 1.18s ]
+PARSING FILES   [/]     -- Time: [ 2.09 ] -- Files: [ 19483 ] -- Folders: [ 3495 ] --
+MOVING FILES    [/]     -- Time: [ 14.10s ]
+CLEAN-UP        [/]     -- Time: [ 0.83s ]
 
 Some duplicated files failed to move
 Press Enter to exit...
@@ -44,17 +41,13 @@ Press Enter to exit...
 ## Unsort
 
 ```
-Do you really wish to (UNSORT) this directory? (y/n)
-C:\Users\jangk\Downloads: y
-
 --- UNSORTING ---
 
-PARSING FILES   [/]     -- Files: [ 34712 ] -- Folders: [ 229 ] -- Time: [ 146.5766ms ] --
-MOVING FILES    [/]     -- Time: [ 39.5003085s ]
-CLEANUP         [/]
-Finished        [/]
+PARSING FILES   [/]     -- Time: [ 2.88 ] -- Files: [ 19483 ] -- Folders: [ 3532 ] --
+MOVING FILES    [/]     -- Time: [ 14.89 ]
+CLEAN-UP        [/]     -- Time: [ 0.61s ]
 
-Total execution time: [ 39.653121s ]
+Some duplicated files failed to move
 Press Enter to exit...
 ```
 
