@@ -30,7 +30,7 @@ Select an option: (enter Q to quit)
 ```
 --- SORTING ---
 
-PARSING FILES   [/]     -- Time: [ 2.09 ] -- Files: [ 19483 ] -- Folders: [ 3495 ] --
+PARSING FILES   [/]     -- Time: [ 2.09s ] -- Files: [ 19483 ] -- Folders: [ 3495 ] --
 MOVING FILES    [/]     -- Time: [ 14.10s ]
 CLEAN-UP        [/]     -- Time: [ 0.83s ]
 
@@ -43,8 +43,8 @@ Press Enter to exit...
 ```
 --- UNSORTING ---
 
-PARSING FILES   [/]     -- Time: [ 2.88 ] -- Files: [ 19483 ] -- Folders: [ 3532 ] --
-MOVING FILES    [/]     -- Time: [ 14.89 ]
+PARSING FILES   [/]     -- Time: [ 2.88s ] -- Files: [ 19483 ] -- Folders: [ 3532 ] --
+MOVING FILES    [/]     -- Time: [ 14.89s ]
 CLEAN-UP        [/]     -- Time: [ 0.61s ]
 
 Some duplicated files failed to move
@@ -102,3 +102,7 @@ rm %GOPATH%/bin/gofilesorter.exe
 # Linux
 rm $GOPATH/bin/gofilesorter
 ```
+
+# Notes
+
+- if a file with same name already exists in the destination path, the file will not be moved and will therfore remain. 
