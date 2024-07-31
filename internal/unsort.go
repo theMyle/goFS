@@ -3,7 +3,6 @@ package internal
 import (
 	"fmt"
 	"log"
-	"os"
 	"path/filepath"
 	"time"
 )
@@ -41,15 +40,9 @@ func Unsort(root string) {
 		fileName := filepath.Base(sourcePath)
 		destPath := filepath.Join(root, fileName)
 
-		// Check for duplicates
-		if _, err := os.Stat(destPath); err == nil {
-			if sourcePath != destPath {
-				errMsg += fmt.Sprintf("%v\n", sourcePath)
-			}
-		} else {
-			if sourcePath != destPath {
-				os.Rename(sourcePath, destPath)
-			}
+		err := MoveFile(sourcePath, destPath)
+		if err != nil {
+			errMsg += fmt.Sprintf("%v\n", err)
 		}
 	}
 

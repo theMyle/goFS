@@ -3,9 +3,7 @@ package internal
 import (
 	"fmt"
 	"log"
-	"os"
 	"path/filepath"
-	"strings"
 	"time"
 )
 
@@ -37,6 +35,10 @@ func Sort(root string) {
 	addMap(mp, AppsExt, InternalFolders[3])
 	addMap(mp, DocumentsExt, InternalFolders[4])
 
+	for _, item := range InternalFolders {
+		CreateFolder(gosortFolderPath, item)
+	}
+
 	// Move Files
 	fmt.Print("MOVING FILES")
 	startTime = time.Now()
@@ -50,31 +52,18 @@ func Sort(root string) {
 
 	for _, v := range filePaths {
 		fileName := filepath.Base(v)
-		var extension string
-
-		if len(filepath.Ext(fileName)) > 0 {
-			extension = strings.ToLower(filepath.Ext(fileName)[1:])
-		} else {
-			extension = "None"
-		}
+		extension, _ := GetFileExt(v)
 
 		value, exists := mp[extension]
 		if !exists {
 			value = InternalFolders[5]
 		}
 
-		CreateFolder(gosortFolderPath, value)
-		destPath := filepath.Join(root, GoSortFolderName, value, fileName)
+		destPath := filepath.Join(gosortFolderPath, value, fileName)
 
-		// check if file is already present
-		if _, err := os.Stat(destPath); err == nil {
-			if v != destPath {
-				errMsg += fmt.Sprintf("%v\n", v)
-			}
-		} else {
-			if v != destPath {
-				os.Rename(v, destPath)
-			}
+		err := MoveFile(v, destPath)
+		if err != nil {
+			errMsg += fmt.Sprintf("%v\n", err)
 		}
 	}
 
