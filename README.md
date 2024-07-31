@@ -6,10 +6,9 @@ A simple CLI app for sorting files
 
 - `SORT`: Sorts the entire content of the selected directory.
 - `UNSORT`: Unsorts all files in the chosen directory (Puts them outside).
-- `FILTER`: Filters files with the specified file extensions in the chosen
-  directory.
-  - `_filter & move_` - moves files.
-  - `_filter & copy_` - copies files.
+- `FILTER`: Filters files with the specified file extensions in the chosen directory.
+  - `move` - moves files.
+  - `copy` - copies files.
 
 # Usage
 
@@ -51,16 +50,37 @@ Some duplicated files failed to move
 Press Enter to exit...
 ```
 
-## Filter and Move
-
-```
-Implementation not yet polished
-```
-
 ## Filter and Copy
 
 ```
-Implementation not yet polished
+Enter the file extension\s the you wish to filter: 
+png jpeg
+
+-- FILTERING --
+
+PARSING FILES   [/]     -- Time: [ 3.28s ] -- Files: [ 26606 ]
+COPYING FILES   [/]     -- Time: [ 3.94s ]
+CLEAN-UP        [/]     -- Time: [ 0.46s ]
+
+Some files with duplicated names might not be moved
+Press Enter to exit...
+
+```
+
+## Filter and Move
+
+```
+Enter the file extension\s the you wish to filter: 
+png
+
+-- FILTERING --
+
+PARSING FILES   [/]     -- Time: [ 2.82s ] -- Files: [ 17848 ]
+MOVING FILES    [/]     -- Time: [ 7.48s ]
+CLEAN-UP        [/]     -- Time: [ 0.43s ]
+
+Some duplicated files failed to be copy/moved
+Press Enter to exit...
 ```
 
 ## Help
