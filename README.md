@@ -58,7 +58,7 @@ png jpeg
 
 -- FILTERING --
 
-PARSING FILES   [/]      -- Time: [ 3.28s ] -- Files: [ 26606 ]
+PARSING FILES   [/]     -- Time: [ 3.28s ] -- Files: [ 26606 ]
 COPYING FILES   [/]     -- Time: [ 3.94s ]
 CLEAN-UP        [/]     -- Time: [ 0.46s ]
 
@@ -75,7 +75,7 @@ png
 
 -- FILTERING --
 
-PARSING FILES   [/]      -- Time: [ 2.82s ] -- Files: [ 17848 ]
+PARSING FILES   [/]     -- Time: [ 2.82s ] -- Files: [ 17848 ]
 MOVING FILES    [/]     -- Time: [ 7.48s ]
 CLEAN-UP        [/]     -- Time: [ 0.43s ]
 
