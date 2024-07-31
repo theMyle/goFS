@@ -22,7 +22,7 @@ func Sort(root string) {
 	}
 
 	fmt.Printf("\t[/]")
-	fmt.Printf("\t-- Time: [ %.2f ] -- Files: [ %d ] -- Folders: [ %d ] --\n",
+	fmt.Printf("\t-- Time: [ %.2fs ] -- Files: [ %d ] -- Folders: [ %d ] --\n",
 		time.Since(startTime).Seconds(),
 		len(filePaths),
 		len(folderPaths))
@@ -41,10 +41,10 @@ func Sort(root string) {
 	fmt.Print("MOVING FILES")
 	startTime = time.Now()
 
-	errMsg := "Files already exists in destination:\n"
+	errMsg := ""
 	defer func() {
 		if errMsg != "" {
-			fmt.Println("Some duplicated files failed to move")
+			fmt.Println("Some duplicated files failed to be moved")
 		}
 	}()
 

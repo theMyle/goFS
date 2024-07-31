@@ -21,7 +21,7 @@ func Unsort(root string) {
 	}
 
 	fmt.Printf("\t[/] ")
-	fmt.Printf("\t-- Time: [ %.2f ] -- Files: [ %d ] -- Folders: [ %d ] --\n",
+	fmt.Printf("\t-- Time: [ %.2fs ] -- Files: [ %d ] -- Folders: [ %d ] --\n",
 		time.Since(startTime).Seconds(),
 		len(filePaths),
 		len(folderPaths))
@@ -30,10 +30,10 @@ func Unsort(root string) {
 	fmt.Print("MOVING FILES ")
 	startTime = time.Now()
 
-	errMsg := "file already exists in destination:\n"
+	errMsg := ""
 	defer func() {
 		if errMsg != "" {
-			fmt.Println("Some duplicated files failed to move")
+			fmt.Println("Some duplicated files failed to be moved")
 		}
 	}()
 
@@ -54,7 +54,7 @@ func Unsort(root string) {
 	}
 
 	fmt.Printf("\t[/] ")
-	fmt.Printf("\t-- Time: [ %.2f ]\n", time.Since(startTime).Seconds())
+	fmt.Printf("\t-- Time: [ %.2fs ]\n", time.Since(startTime).Seconds())
 
 	// Clean Empty Folders
 	fmt.Print("CLEAN-UP")

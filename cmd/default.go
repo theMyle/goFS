@@ -78,16 +78,16 @@ func printHelp() {
 	fmt.Printf("\n-- HELP --\n")
 
 	fmt.Println("1. [ sort ]: ")
-	fmt.Printf("\t-- sorts the files inside the chosen directory (not including ones inside folders).\n\n")
+	fmt.Printf("\t-- sorts all files inside the chosen directory.\n\n")
 
 	fmt.Println("2. [ unsort ]: ")
-	fmt.Printf("\t-- unsorts all files and folders inside the chosen directory.\n\n")
+	fmt.Printf("\t-- unsorts all files and folders inside the chosen directory into a GoSort folder.\n\n")
 
 	fmt.Println("3. [ filter & copy ]: ")
 	fmt.Printf("\t-- filters all files with the specified extension and creates a copy in a separate directory.\n\n")
 
 	fmt.Println("4. [ filter & move ]: ")
-	fmt.Printf("\t-- filters all files with the specified extension and moves it into a separated directory.\n\n")
+	fmt.Printf("\t-- filters all files with the specified extension and moves it into a separate directory.\n\n")
 }
 
 func getFolder(operation string) string {
@@ -113,6 +113,7 @@ func getFolder(operation string) string {
 	return path
 }
 
+// returns file extensions in lowercase
 func getFileExtensions() []string {
 	fmt.Println("\nEnter the file extension\\s the you wish to filter: ")
 
