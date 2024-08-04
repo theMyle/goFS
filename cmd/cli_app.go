@@ -81,7 +81,7 @@ func printHelp() {
 	fmt.Printf("\t-- sorts all files inside the chosen directory.\n\n")
 
 	fmt.Println("2. [ unsort ]: ")
-	fmt.Printf("\t-- unsorts all files and folders inside the chosen directory into a GoSort folder.\n\n")
+	fmt.Printf("\t-- unsorts all files and folders inside the chosen directory.\n\n")
 
 	fmt.Println("3. [ filter & copy ]: ")
 	fmt.Printf("\t-- filters all files with the specified extension and creates a copy in a separate directory.\n\n")
