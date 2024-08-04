@@ -36,7 +36,8 @@ func Sort(root string) {
 	addMap(mp, DocumentsExt, InternalFolders[4])
 
 	for _, item := range InternalFolders {
-		CreateFolder(gosortFolderPath, item)
+		folder := CreateFolder(gosortFolderPath, item)
+		folderPaths = append(folderPaths, folder)
 	}
 
 	// Move Files
