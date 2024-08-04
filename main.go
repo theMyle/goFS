@@ -89,7 +89,7 @@ func showHelp() {
 	fmt.Printf("Go File Sorter by theMyle\n\n")
 
 	fmt.Printf("Usage:\n\n")
-	fmt.Printf("\tgofilesorter [FLAG] [ARGS] [ADDITIONAL ARGS..]\n\n")
+	fmt.Printf("\tgofilesorter [FLAG] [ARG] [ADDITIONAL ARGS..]\n\n")
 
 	fmt.Printf("Example:\n\n")
 	fmt.Printf("\tgofilesorter -path ./Downloads -sort\n")
