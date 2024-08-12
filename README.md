@@ -1,6 +1,6 @@
 # Go File Sorter
 
-goFS - A fast concurrent file sorter made by theMyle 
+**goFS** - A fast concurrent file sorter
 
 ## Features
 
@@ -103,7 +103,7 @@ _______________________________________________________________
 If you have go compiler installed 
 
 ```bash
-go install https://github.com/theMyle/goFS@latest
+go install github.com/theMyle/goFS@latest
 ```
 You can now launch the app by simply typing `goFS` in the commandline.
 
