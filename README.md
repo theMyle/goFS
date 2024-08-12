@@ -103,7 +103,7 @@ _______________________________________________________________
 If you have go compiler installed 
 
 ```bash
-go install https://github.com/theMyle/goFileSorter@latest
+go install https://github.com/theMyle/goFS@latest
 ```
 You can now launch the app by simply typing `goFS` in the commandline.
 
