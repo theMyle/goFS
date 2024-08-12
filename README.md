@@ -1,16 +1,41 @@
 # Go File Sorter
 
-A simple CLI app for sorting files
+goFS - A fast concurrent file sorter made by theMyle 
 
 ## Features
 
-- `SORT`: Sorts the entire content of the selected directory.
-- `UNSORT`: Unsorts all files in the chosen directory (Puts them outside).
-- `FILTER`: Filters files with the specified file extensions in the chosen directory.
-  - `move` - moves files.
-  - `copy` - copies files.
+- SORT: Sorts all files in the chosen directory.
+- UNSORT: Unsorts all files in the chosen directory.
+- FILTER: Filters files with the specified file extensions inside chosen directory.
 
-# Usage
+# CLI Mode
+
+```
+goFS - A fast concurrent file sorter made with golang
+
+Usage:
+  goFS [sort | unsort | filter] <directory> [flags] [args]
+  goFS [command]
+
+Examples:
+  goFS sort ./Downloads
+  goFS unsort ./Documents
+  goFS filter --copy ./Documents exe pdf doc
+
+Available Commands:
+  completion  Generate the autocompletion script for the specified shell
+  filter      goFS - Filters the chosen directory
+  help        Help about any command
+  sort        goFS - Sorts the chosen directory
+  unsort      goFS - Unsorts the chosen directory
+
+Flags:
+  -h, --help   help for goFS
+
+Use "goFS [command] --help" for more information about a command.
+```
+
+# Interactive Mode 
 
 ```
 Go File Sorter by theMyle
@@ -24,7 +49,7 @@ Select an option: (enter Q to quit)
 >>
 ```
 
-## Sort
+## Sample Usage
 
 ```
 --- SORTING ---
@@ -33,26 +58,20 @@ PARSING FILES   [/]     -- Time: [ 2.09s ] -- Files: [ 19483 ] -- Folders: [ 349
 MOVING FILES    [/]     -- Time: [ 14.10s ]
 CLEAN-UP        [/]     -- Time: [ 0.83s ]
 
-Some duplicated files failed to move
 Press Enter to exit...
-```
+_______________________________________________________________
 
-## Unsort
-
-```
+_______________________________________________________________
 --- UNSORTING ---
 
 PARSING FILES   [/]     -- Time: [ 2.88s ] -- Files: [ 19483 ] -- Folders: [ 3532 ] --
 MOVING FILES    [/]     -- Time: [ 14.89s ]
 CLEAN-UP        [/]     -- Time: [ 0.61s ]
 
-Some duplicated files failed to move
 Press Enter to exit...
-```
+_______________________________________________________________
 
-## Filter and Copy
-
-```
+_______________________________________________________________
 Enter the file extension\s the you wish to filter: 
 png jpeg
 
@@ -62,14 +81,10 @@ PARSING FILES   [/]     -- Time: [ 3.28s ] -- Files: [ 26606 ]
 COPYING FILES   [/]     -- Time: [ 3.94s ]
 CLEAN-UP        [/]     -- Time: [ 0.46s ]
 
-Some files with duplicated names might not be moved
 Press Enter to exit...
+_______________________________________________________________
 
-```
-
-## Filter and Move
-
-```
+_______________________________________________________________
 Enter the file extension\s the you wish to filter: 
 png
 
@@ -79,49 +94,20 @@ PARSING FILES   [/]     -- Time: [ 2.82s ] -- Files: [ 17848 ]
 MOVING FILES    [/]     -- Time: [ 7.48s ]
 CLEAN-UP        [/]     -- Time: [ 0.43s ]
 
-Some duplicated files failed to be copy/moved
 Press Enter to exit...
-```
-
-## Help
-
-```
--- HELP --
-1. [ sort ]:
-        -- sorts the files inside the chosen directory (not including ones inside folders).
-
-2. [ unsort ]:
-        -- unsorts all files and folders inside the chosen directory.
-
-3. [ filter & copy ]:
-        -- filters all files with the specified extension and creates a copy in a separate directory.
-
-4. [ filter & move ]:
-        -- filters all files with the specified extension and moves it into a separated directory.
+_______________________________________________________________
 ```
 
 # Installation
 
-```bash
-git clone https://github.com/theMyle/goFileSorter.git
-cd goFileSorter
-go install .
-gofilesorter
-```
-you can now launch the app by simply typing `gofilesorter` in the commandline 
-
-# Uninstall
+If you have go compiler installed 
 
 ```bash
-# Windows
-## PowerShell
-rm $env:GOPATH/bin/gofilesorter.exe
-## CMD
-rm %GOPATH%/bin/gofilesorter.exe
-
-# Linux
-rm $GOPATH/bin/gofilesorter
+go install https://github.com/theMyle/goFileSorter@latest
 ```
+You can now launch the app by simply typing `goFS` in the commandline.
+
+Or just download the precompiled binary.
 
 # Notes
 

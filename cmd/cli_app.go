@@ -8,7 +8,7 @@ import (
 	"strings"
 
 	"github.com/sqweek/dialog"
-	"github.com/theMyle/goFileSorter/internal"
+	"github.com/theMyle/goFS/internal"
 )
 
 func DefaultRun() {
