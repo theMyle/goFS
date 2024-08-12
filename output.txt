@@ -1,9 +1,0 @@
-Go File Sorter by theMyle
-
-Select an option: (enter Q to quit)
-        1. sort
-        2. unsort
-        3. filter & copy
-        4. filter & move
-        5. help
->> 
