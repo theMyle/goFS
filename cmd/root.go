@@ -17,12 +17,12 @@ func init() {
 }
 
 var rootCmd = &cobra.Command{
-	Use:   programName + " [sort | unsort | filter] <directory> [flags] [args]",
+	Use:   programName + " [command] [flags] <directory> [args]",
 	Short: "Go File Sorter by theMyle",
 	Long:  programName + " - A fast concurrent file sorter made with golang",
 	Example: "  " + programName + " sort ./Downloads\n  " +
 		programName + " unsort ./Documents\n  " +
-		programName + " filter --copy ./Documents exe pdf doc",
+		programName + " filter -c ./Documents exe pdf doc",
 
 	Run: func(cmd *cobra.Command, args []string) {
 		if len(args) == 0 {
