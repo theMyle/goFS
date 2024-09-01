@@ -14,7 +14,7 @@
 goFS - A fast concurrent file sorter made with golang
 
 Usage:
-  goFS [sort | unsort | filter] <directory> [flags] [args]
+  goFS [command] [flag] [directory] [args]
   goFS [command]
 
 Examples:
