@@ -8,7 +8,7 @@
 - UNSORT: Unsorts all files in the chosen directory.
 - FILTER: Filters files with the specified file extensions inside chosen directory.
 
-# CLI Mode
+# CLI 
 
 ```
 goFS - A fast concurrent file sorter made with golang
@@ -35,20 +35,6 @@ Flags:
 Use "goFS [command] --help" for more information about a command.
 ```
 
-# Interactive Mode 
-
-```
-Go File Sorter by theMyle
-
-Select an option: (enter Q to quit)
-        1. sort
-        2. unsort
-        3. filter & copy
-        4. filter & move
-        5. help
->>
-```
-
 ## Sample Usage
 
 ```
@@ -61,7 +47,6 @@ CLEAN-UP        [/]     -- Time: [ 0.83s ]
 Press Enter to exit...
 _______________________________________________________________
 
-_______________________________________________________________
 --- UNSORTING ---
 
 PARSING FILES   [/]     -- Time: [ 2.88s ] -- Files: [ 19483 ] -- Folders: [ 3532 ] --
@@ -71,7 +56,6 @@ CLEAN-UP        [/]     -- Time: [ 0.61s ]
 Press Enter to exit...
 _______________________________________________________________
 
-_______________________________________________________________
 Enter the file extension\s the you wish to filter: 
 png jpeg
 
@@ -84,7 +68,6 @@ CLEAN-UP        [/]     -- Time: [ 0.46s ]
 Press Enter to exit...
 _______________________________________________________________
 
-_______________________________________________________________
 Enter the file extension\s the you wish to filter: 
 png
 
@@ -111,4 +94,4 @@ Or just download the precompiled binary.
 
 # Notes
 
-- if a file with same name already exists in the destination path, the file will not be moved and will therfore remain. 
+- if a file with same name already exists in the destination path, the file will not be moved and will therfore stay there. 
