@@ -56,9 +56,6 @@ CLEAN-UP        [/]     -- Time: [ 0.61s ]
 Press Enter to exit...
 _______________________________________________________________
 
-Enter the file extension\s the you wish to filter: 
-png jpeg
-
 -- FILTERING --
 
 PARSING FILES   [/]     -- Time: [ 3.28s ] -- Files: [ 26606 ]
@@ -67,9 +64,6 @@ CLEAN-UP        [/]     -- Time: [ 0.46s ]
 
 Press Enter to exit...
 _______________________________________________________________
-
-Enter the file extension\s the you wish to filter: 
-png
 
 -- FILTERING --
 
