@@ -17,7 +17,7 @@ func init() {
 }
 
 var rootCmd = &cobra.Command{
-	Use:   programName + " [command] [flags] <directory> [args]",
+	Use:   programName + " [command] [flags] [directory] [args]",
 	Short: "Go File Sorter by theMyle",
 	Long:  programName + " - A fast concurrent file sorter made with golang",
 	Example: "  " + programName + " sort ./Downloads\n  " +
