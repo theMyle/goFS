@@ -1,14 +1,20 @@
-# Go File Sorter
+# ⚡️ goFS – Go File Sorter
 
-**goFS** - A fast concurrent file sorter
+**goFS** is a fast, concurrent command-line tool written in Go that sorts, unsorts, or filters files in a given directory. It's designed for speed, simplicity, and ease of use — especially when working with directories containing thousands of files.
 
-## Features
+---
 
-- SORT: Sorts all files in the chosen directory.
-- UNSORT: Unsorts all files in the chosen directory.
-- FILTER: Filters files with the specified file extensions inside chosen directory.
+## 📦 Features
 
-# CLI 
+- **Sort** files into subfolders based on file type
+- **Unsort** files by restoring them to their original (flattened) structure
+- **Filter** files by extension, with the option to move or copy them
+- Built with **Golang** and the **Cobra** CLI library
+- Concurrent file operations for fast performance
+
+---
+
+## CLI 
 
 ```
 goFS - A fast concurrent file sorter made with golang
@@ -75,17 +81,18 @@ Press Enter to exit...
 _______________________________________________________________
 ```
 
-# Installation
+## Installation
 
 If you have go compiler installed 
 
 ```bash
 go install github.com/theMyle/goFS@latest
 ```
+
 You can now launch the app by simply typing `goFS` in the commandline.
 
 Or just download the precompiled binary.
 
-# Notes
+## Notes
 
 - if a file with same name already exists in the destination path, the file will not be moved and will therfore stay there. 
