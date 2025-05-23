@@ -1,6 +1,14 @@
 # ⚡️ goFS – Go File Sorter
 
-**goFS** is a fast, concurrent command-line tool written in Go that sorts, unsorts, or filters files in a given directory. It's designed for speed, simplicity, and ease of use — especially when working with directories containing thousands of files.
+**goFS** (Go File Sorter) is a fast, concurrent CLI tool written in Go for sorting, unsorting, and filtering files in large directories. Built as a learning project, it demonstrates how concurrency can accelerate I/O-heavy tasks — though, as the project revealed, most file operations are I/O-bound, meaning performance is ultimately limited by disk read/write speeds rather than CPU power.
+
+Through this project, I deepened my understanding of:
+
+Go's concurrency model (goroutines, channels, sync)
+
+How caching impacts file system performance
+
+Real-world trade-offs between CPU-bound vs I/O-bound task
 
 ---
 
